@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 25% 98%;
+    --foreground: 220 30% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 30% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 30% 12%;
+
+    --primary: 220 90% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 270 80% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 20% 92%;
+    --muted-foreground: 220 15% 45%;
+
+    --accent: 260 85% 60%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 70% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 220 20% 88%;
+    --input: 220 20% 88%;
+    --ring: 220 90% 50%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 220 95% 15%;
+    --sidebar-foreground: 220 20% 95%;
+    --sidebar-primary: 260 85% 60%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 80% 25%;
+    --sidebar-accent-foreground: 220 20% 95%;
+    --sidebar-border: 220 60% 30%;
+    --sidebar-ring: 260 85% 60%;
+
+    /* Custom tokens - Modern Tech Blue & Purple */
+    --gradient-primary: linear-gradient(135deg, hsl(220 95% 15%) 0%, hsl(220 90% 50%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(260 85% 60%) 0%, hsl(270 80% 55%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(220 95% 15%) 0%, hsl(220 90% 40%) 50%, hsl(270 80% 55%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 25% 98%) 100%);
+    
+    --shadow-sm: 0 1px 2px 0 hsl(220 30% 12% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(220 30% 12% / 0.1), 0 2px 4px -2px hsl(220 30% 12% / 0.1);
+    --shadow-lg: 0 10px 15px -3px hsl(220 30% 12% / 0.1), 0 4px 6px -4px hsl(220 30% 12% / 0.1);
+    --shadow-xl: 0 20px 25px -5px hsl(220 30% 12% / 0.1), 0 8px 10px -6px hsl(220 30% 12% / 0.1);
+    --shadow-glow: 0 0 20px hsl(260 85% 60% / 0.3);
+
+    --font-heading: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  .dark {
+    --background: 215 25% 10%;
+    --foreground: 210 20% 95%;
+
+    --card: 215 25% 13%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 215 25% 13%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 175 50% 50%;
+    --primary-foreground: 215 25% 10%;
+
+    --secondary: 210 40% 30%;
+    --secondary-foreground: 210 20% 95%;
+
+    --muted: 215 20% 20%;
+    --muted-foreground: 215 15% 60%;
+
+    --accent: 175 50% 45%;
+    --accent-foreground: 215 25% 10%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 215 20% 22%;
+    --input: 215 20% 22%;
+    --ring: 175 50% 50%;
+
+    --sidebar-background: 215 30% 12%;
+    --sidebar-foreground: 210 20% 90%;
+    --sidebar-primary: 175 50% 50%;
+    --sidebar-primary-foreground: 215 25% 10%;
+    --sidebar-accent: 215 25% 18%;
+    --sidebar-accent-foreground: 210 20% 90%;
+    --sidebar-border: 215 20% 20%;
+    --sidebar-ring: 175 50% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-card {
+    background: var(--gradient-card);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-card-hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background: var(--gradient-accent);
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.5s ease-out forwards;
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out forwards;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted rounded-full;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full hover:bg-muted-foreground/50 transition-colors;
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background;
+}

@@ -1,0 +1,86 @@
+🚀 Server running on port 5000
+📝 Environment: development
+🔗 Frontend URL: http://localhost:8080
+✅ Database connected successfully
+
+✅ Available API Endpoints:
+   - GET    /health
+   - POST   /api/auth/login
+   - POST   /api/auth/logout
+   - GET    /api/auth/me
+   - GET    /api/colleges
+   - GET    /api/students
+   - GET    /api/faculty
+   - GET    /api/admins
+   - GET    /api/dashboard/stats
+   - GET    /api/dashboard/activities
+prisma:query SELECT `edutrack`.`User`.`id`, `edutrack`.`User`.`email`, `edutrack`.`User`.`password`, `edutrack`.`User`.`name`, `edutrack`.`User`.`role`, `edutrack`.`User`.`phone`, `edutrack`.`User`.`avatar`, `edutrack`.`User`.`collegeId`, `edutrack`.`User`.`createdAt`, `edutrack`.`User`.`updatedAt` FROM `edutrack`.`User` WHERE (`edutrack`.`User`.`id` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query SELECT `edutrack`.`College`.`id`, `edutrack`.`College`.`name`, `edutrack`.`College`.`code`, `edutrack`.`College`.`type`, `edutrack`.`College`.`address`, `edutrack`.`College`.`phone`, `edutrack`.`College`.`email`, `edutrack`.`College`.`logo`, `edutrack`.`College`.`studentsCount`, `edutrack`.`College`.`facultyCount`, `edutrack`.`College`.`isLocked`, `edutrack`.`College`.`createdAt`, `edutrack`.`College`.`updatedAt` FROM `edutrack`.`College` WHERE `edutrack`.`College`.`id` IN (?)
+prisma:query SELECT `edutrack`.`College`.`id`, `edutrack`.`College`.`name`, `edutrack`.`College`.`code`, `edutrack`.`College`.`type`, `edutrack`.`College`.`address`, `edutrack`.`College`.`phone`, `edutrack`.`College`.`email`, `edutrack`.`College`.`logo`, `edutrack`.`College`.`studentsCount`, `edutrack`.`College`.`facultyCount`, `edutrack`.`College`.`isLocked`, `edutrack`.`College`.`createdAt`, `edutrack`.`College`.`updatedAt` FROM `edutrack`.`College` WHERE (`edutrack`.`College`.`id` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query SELECT `edutrack`.`User`.`id`, `edutrack`.`User`.`email`, `edutrack`.`User`.`password`, `edutrack`.`User`.`name`, `edutrack`.`User`.`role`, `edutrack`.`User`.`phone`, `edutrack`.`User`.`avatar`, `edutrack`.`User`.`collegeId`, `edutrack`.`User`.`createdAt`, `edutrack`.`User`.`updatedAt` FROM `edutrack`.`User` WHERE (`edutrack`.`User`.`id` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query BEGIN
+prisma:query INSERT INTO `edutrack`.`User` (`id`,`email`,`password`,`name`,`role`,`phone`,`collegeId`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?,?)
+prisma:query ROLLBACK
+prisma:error 
+Invalid `prisma.user.create()` invocation in
+c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\src\controllers\studentController.ts:123:40
+
+  120 const bcrypt = require('bcryptjs');
+  121 const hashedPassword = await bcrypt.hash(password || 'student123', 10);
+  122 
+→ 123 const user = await prisma.user.create(
+Unique constraint failed on the constraint: `User_email_key`
+Create student error: PrismaClientKnownRequestError: 
+Invalid `prisma.user.create()` invocation in
+c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\src\controllers\studentController.ts:123:40
+
+  120 const bcrypt = require('bcryptjs');
+  121 const hashedPassword = await bcrypt.hash(password || 'student123', 10);
+  122 
+→ 123 const user = await prisma.user.create(
+Unique constraint failed on the constraint: `User_email_key`
+    at $n.handleRequestError (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async createStudent (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\src\controllers\studentController.ts:123:22) {
+  code: 'P2002',
+  clientVersion: '5.22.0',
+  meta: { modelName: 'User', target: 'User_email_key' }
+}
+prisma:query SELECT `edutrack`.`User`.`id`, `edutrack`.`User`.`email`, `edutrack`.`User`.`password`, `edutrack`.`User`.`name`, `edutrack`.`User`.`role`, `edutrack`.`User`.`phone`, `edutrack`.`User`.`avatar`, `edutrack`.`User`.`collegeId`, `edutrack`.`User`.`createdAt`, `edutrack`.`User`.`updatedAt` FROM `edutrack`.`User` WHERE (`edutrack`.`User`.`id` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query SELECT `edutrack`.`College`.`id`, `edutrack`.`College`.`name`, `edutrack`.`College`.`code`, `edutrack`.`College`.`type`, `edutrack`.`College`.`address`, `edutrack`.`College`.`phone`, `edutrack`.`College`.`email`, `edutrack`.`College`.`logo`, `edutrack`.`College`.`studentsCount`, `edutrack`.`College`.`facultyCount`, `edutrack`.`College`.`isLocked`, `edutrack`.`College`.`createdAt`, `edutrack`.`College`.`updatedAt` FROM `edutrack`.`College` WHERE `edutrack`.`College`.`id` IN (?)
+prisma:query SELECT `edutrack`.`College`.`id`, `edutrack`.`College`.`name`, `edutrack`.`College`.`code`, `edutrack`.`College`.`type`, `edutrack`.`College`.`address`, `edutrack`.`College`.`phone`, `edutrack`.`College`.`email`, `edutrack`.`College`.`logo`, `edutrack`.`College`.`studentsCount`, `edutrack`.`College`.`facultyCount`, `edutrack`.`College`.`isLocked`, `edutrack`.`College`.`createdAt`, `edutrack`.`College`.`updatedAt` FROM `edutrack`.`College` WHERE (`edutrack`.`College`.`id` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query SELECT `edutrack`.`User`.`id`, `edutrack`.`User`.`email`, `edutrack`.`User`.`password`, `edutrack`.`User`.`name`, `edutrack`.`User`.`role`, `edutrack`.`User`.`phone`, `edutrack`.`User`.`avatar`, `edutrack`.`User`.`collegeId`, `edutrack`.`User`.`createdAt`, `edutrack`.`User`.`updatedAt` FROM `edutrack`.`User` WHERE (`edutrack`.`User`.`id` = ? AND 1=1) LIMIT ? OFFSET ?
+prisma:query BEGIN
+prisma:query INSERT INTO `edutrack`.`User` (`id`,`email`,`password`,`name`,`role`,`phone`,`collegeId`,`createdAt`,`updatedAt`) VALUES (?,?,?,?,?,?,?,?,?)
+prisma:query ROLLBACK
+prisma:error 
+Invalid `prisma.user.create()` invocation in
+c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\src\controllers\studentController.ts:123:40
+
+  120 const bcrypt = require('bcryptjs');
+  121 const hashedPassword = await bcrypt.hash(password || 'student123', 10);
+  122 
+→ 123 const user = await prisma.user.create(
+Unique constraint failed on the constraint: `User_email_key`
+Create student error: PrismaClientKnownRequestError: 
+Invalid `prisma.user.create()` invocation in
+c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\src\controllers\studentController.ts:123:40
+
+  120 const bcrypt = require('bcryptjs');
+  121 const hashedPassword = await bcrypt.hash(password || 'student123', 10);
+  122 
+→ 123 const user = await prisma.user.create(
+Unique constraint failed on the constraint: `User_email_key`
+    at $n.handleRequestError (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:121:7315)
+    at $n.handleAndLogRequestError (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:121:6623)
+    at $n.request (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:121:6307)
+    at async l (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\node_modules\@prisma\client\runtime\library.js:130:9633)
+    at async createStudent (c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server\src\controllers\studentController.ts:123:22) {
+  code: 'P2002',
+  clientVersion: '5.22.0',
+  meta: { modelName: 'User', target: 'User_email_key' }
+}
+
+c:\Users\BALA R\Documents\NBA_Projects\EDU - TRACK\student-success-hub-main\server>

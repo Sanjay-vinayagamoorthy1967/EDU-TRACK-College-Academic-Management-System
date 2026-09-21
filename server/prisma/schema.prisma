@@ -1,0 +1,243 @@
+// This is your Prisma schema file
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole
+  phone     String?
+  avatar    String?
+  collegeId String?
+  college   College? @relation(fields: [collegeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  adminProfile   Admin?
+  facultyProfile Faculty?
+  studentProfile Student?
+  activities     Activity[]
+
+  @@index([email])
+  @@index([collegeId])
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  ADMIN
+  FACULTY
+  STUDENT
+}
+
+model College {
+  id            String   @id @default(uuid())
+  name          String
+  code          String   @unique
+  type          String
+  address       String
+  phone         String
+  email         String   @unique
+  logo          String?
+  studentsCount Int      @default(0)
+  facultyCount  Int      @default(0)
+  isLocked      Boolean  @default(false)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  users     User[]
+  admins    Admin[]
+  faculty   Faculty[]
+  students  Student[]
+  courses   Course[]
+  activities Activity[]
+
+  @@index([code])
+}
+
+model Course {
+  id         String   @id @default(uuid())
+  name       String
+  code       String
+  duration   Int      // Duration in semesters
+  collegeId  String
+  college    College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([code, collegeId])
+  @@index([collegeId])
+}
+
+model Admin {
+  id         String   @id @default(uuid())
+  userId     String   @unique
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId  String
+  college    College  @relation(fields: [collegeId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([collegeId])
+}
+
+model Faculty {
+  id           String   @id @default(uuid())
+  userId       String   @unique
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId    String
+  college      College  @relation(fields: [collegeId], references: [id])
+  department   String
+  designation  String
+  qualification String
+  experience   Int
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([collegeId])
+  @@index([department])
+}
+
+model Student {
+  id                   String   @id @default(uuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  collegeId            String
+  college              College  @relation(fields: [collegeId], references: [id])
+  course               String
+  semester             Int
+  rollNumber           String   @unique
+  admissionNumber      String   @unique
+  dob                  DateTime
+  gender               Gender
+  address              String
+  fatherName           String
+  motherName           String
+  guardianContact      String
+  guardianOccupation   String
+  tenthMarks           Float
+  tenthBoard           String
+  twelfthMarks         Float
+  twelfthBoard         String
+  attendance           Float    @default(0)
+  profilePhoto         String?
+  aadharCard           String?
+  panCard              String?
+  tenthMarksheet       String?
+  twelfthMarksheet     String?
+  transferCertificate  String?
+  communityCertificate String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relations
+  results SemesterResult[]
+
+  @@index([collegeId])
+  @@index([rollNumber])
+  @@index([course])
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+model SemesterResult {
+  id            String         @id @default(uuid())
+  studentId     String
+  student       Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  semester      Int
+  sgpa          Float
+  cgpa          Float
+  status        ResultStatus
+  isPublished   Boolean        @default(false)
+  publishedAt   DateTime?
+  lastUpdatedBy String?
+  lastUpdatedAt DateTime?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  // Relations
+  subjects SubjectResult[]
+
+  @@unique([studentId, semester])
+  @@index([studentId])
+  @@index([semester])
+}
+
+enum ResultStatus {
+  PASS
+  FAIL
+  PENDING
+}
+
+model SubjectResult {
+  id             String         @id @default(uuid())
+  resultId       String
+  result         SemesterResult @relation(fields: [resultId], references: [id], onDelete: Cascade)
+  code           String
+  name           String
+  credits        Int
+  internalMarks  Float
+  externalMarks  Float
+  totalMarks     Float
+  grade          String
+  gradePoints    Float
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([resultId])
+  @@index([code])
+}
+
+model UploadHistory {
+  id         String       @id @default(uuid())
+  fileName   String
+  records    Int
+  uploadedBy String
+  status     UploadStatus
+  createdAt  DateTime     @default(now())
+
+  @@index([createdAt])
+}
+
+enum UploadStatus {
+  SUCCESS
+  WARNING
+  ERROR
+}
+
+model Activity {
+  id         String       @id @default(uuid())
+  type       ActivityType
+  message    String
+  userId     String?
+  user       User?        @relation(fields: [userId], references: [id])
+  collegeId  String?
+  college    College?     @relation(fields: [collegeId], references: [id])
+  createdAt  DateTime     @default(now())
+
+  @@index([createdAt])
+  @@index([type])
+}
+
+enum ActivityType {
+  STUDENT_ADDED
+  RESULT_PUBLISHED
+  FACULTY_ADDED
+  ADMIN_ADDED
+  COLLEGE_ADDED
+  USER_LOGIN
+  USER_LOGOUT
+}
