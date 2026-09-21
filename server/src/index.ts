@@ -20,10 +20,12 @@ dotenv.config();
 
 const app = express();
 
-// Render is behind a proxy
+// Render runs behind a proxy
 app.set('trust proxy', 1);
 
-const PORT = process.env.PORT || 5000;
+// Render provides PORT as an environment variable string.
+// Convert it to a number for TypeScript.
+const PORT = Number(process.env.PORT) || 5000;
 
 // Database connection check
 async function checkDatabaseConnection() {
@@ -39,9 +41,10 @@ async function checkDatabaseConnection() {
 // CORS
 app.use(cors(corsOptions));
 
-// Handle preflight requests
+// Handle CORS preflight requests
 app.options('*', cors(corsOptions));
 
+// Body parsers
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -59,6 +62,8 @@ app.get('/health', async (req, res) => {
             database: 'Connected',
         });
     } catch (error) {
+        console.error('❌ Health check database error:', error);
+
         res.json({
             status: 'OK',
             timestamp: new Date().toISOString(),
@@ -78,16 +83,19 @@ app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/results', resultRoutes);
 
-// Error handling
+// 404 handler
 app.use(notFound);
+
+// Global error handler
 app.use(errorHandler);
 
 // Start server
 app.listen(PORT, '0.0.0.0', async () => {
     console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📝 Environment: ${process.env.NODE_ENV}`);
-    console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL}`);
+    console.log(`📝 Environment: ${process.env.NODE_ENV || 'development'}`);
+    console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'Not configured'}`);
 
+    // Check database connection
     await checkDatabaseConnection();
 
     console.log('\n✅ Available API Endpoints:');
