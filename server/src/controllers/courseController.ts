@@ -14,7 +14,7 @@ export const getCourses = async (req: AuthRequest, res: Response) => {
         } else {
             const user = await prisma.user.findUnique({ where: { id: userId } });
             courses = await prisma.course.findMany({
-                where: { collegeId: user?.collegeId },
+               where: { collegeId: user?.collegeId ?? undefined },
                 include: { college: { select: { name: true, code: true } } },
             });
         }
